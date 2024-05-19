@@ -7,8 +7,17 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+function AppTwo(){
+  return(
+    <h1>This is the second app</h1>
+  )
+}
+
+
 root.render(
-  <App />
+  <>
+    <App />,
+  </>
 );
 
 
