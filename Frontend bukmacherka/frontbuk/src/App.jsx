@@ -3,17 +3,23 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import FirstScreen from './components/FirstScreen/FirstScreen';
 import Login from './components/Login/Login'; // Make sure Login component is properly imported
+import Navbar from './components/Navbar/Navbar';
+import MainPage from './components/MainPage/MainPage';
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<FirstScreen />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </Router>
-  );
-}
+    return (
+      /* <Router>
+        <Routes>
+          <Route path="/" element={<FirstScreen />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Router> */
+
+      <div>
+        <MainPage/>
+      </div>
+    )
+} 
 
 export default App;
 
