@@ -4,10 +4,18 @@ import './LoginSignUp.css';
 import user_icon from '../../assets/person.png';
 import password_icon from '../../assets/password.png';
 import email_icon from '../../assets/email.png';
+import { useNavigate } from "react-router-dom";
 
 const LoginSignUp = () => {
 
     const [action,setAction] = useState("Sign Up");
+    const navigate = useNavigate();
+
+    const handleLogin = () => {
+        //Do dodania - proces autoryzacji 
+
+        navigate('/main')
+    }
 
     return(
         <div className="container">
@@ -21,7 +29,8 @@ const LoginSignUp = () => {
             </div>
             <div className="inputs">
                 {/*username*/}
-                {action === "Sign In"? <div></div>:                <div className="input">
+                {action === "Sign In"? <div></div>:                
+                <div className="input">
                     <img src={user_icon} alt="" />
                     <input type="text" placeholder="Wojtek" />
                 </div>}
@@ -38,7 +47,7 @@ const LoginSignUp = () => {
                 </div>
                 {action === "Sign Up"? <div></div>:<div className="forgot-password">Lost Password? <span>Click Here</span></div>}
             </div>
-            <div className="submit-btn">Login</div>
+            <div className="submit-btn" onClick={handleLogin}>Login</div>
         </div>
     )
 }

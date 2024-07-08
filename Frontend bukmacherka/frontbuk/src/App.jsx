@@ -2,22 +2,22 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import FirstScreen from './components/FirstScreen/FirstScreen';
-import Login from './components/Login/Login'; // Make sure Login component is properly imported
-import Navbar from './components/Navbar/Navbar';
+import Login from './components/Login/Login'; 
 import MainPage from './components/MainPage/MainPage';
 
 function App() {
     return (
-      /* <Router>
+      <Router>
         <Routes>
           <Route path="/" element={<FirstScreen />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/main" element={<MainPage />} />
         </Routes>
-      </Router> */
+      </Router>
 
-      <div>
+      /*<div>
         <MainPage/>
-      </div>
+      </div>*/
     )
 } 
 
