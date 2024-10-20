@@ -5,24 +5,30 @@ import { AVAILABLE_PLACES } from './data.js';
 import Modal from './components/Modal.jsx';
 import DeleteConfirmation from './components/DeleteConfirmation.jsx';
 import logoImg from './assets/logo.png';
-import {sortPlacesByDistance} from './loc.js'
+import { sortPlacesByDistance } from './loc.js';
+
+const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+const storedPlaces = storedIds.map((id) =>
+  AVAILABLE_PLACES.find((place) => place.id === id)
+);
 
 function App() {
   const modal = useRef();
   const selectedPlace = useRef();
   const [availablePlaces, setAvailablePlaces] = useState([]);
-  const [pickedPlaces, setPickedPlaces] = useState([]);
+  const [pickedPlaces, setPickedPlaces] = useState(storedPlaces);
 
-  // Helps us escape infinite loop and use Effect will reexecute only when 
-  // empty array (dependencies array) is changed and this never change so its executed only once.
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
-      const sortedPlaces = sortPlacesByDistance(AVAILABLE_PLACES, position.coords.latitude, position.coords.longitude);
-  
+      const sortedPlaces = sortPlacesByDistance(
+        AVAILABLE_PLACES,
+        position.coords.latitude,
+        position.coords.longitude
+      );
+
       setAvailablePlaces(sortedPlaces);
     });
   }, []);
-
 
   function handleStartRemovePlace(id) {
     modal.current.open();
@@ -43,8 +49,11 @@ function App() {
     });
 
     const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
-    if(storedIds.indexOf(id) !== -1) {
-      localStorage.setItem('selectedPlaces', JSON.stringify([id, ...storedIds]));
+    if (storedIds.indexOf(id) === -1) {
+      localStorage.setItem(
+        'selectedPlaces',
+        JSON.stringify([id, ...storedIds])
+      );
     }
   }
 
@@ -53,6 +62,12 @@ function App() {
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
     modal.current.close();
+
+    const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+    localStorage.setItem(
+      'selectedPlaces',
+      JSON.stringify(storedIds.filter((id) => id !== selectedPlace.current))
+    );
   }
 
   return (
@@ -82,7 +97,7 @@ function App() {
         <Places
           title="Available Places"
           places={availablePlaces}
-          fallbackText={'Sorting places by distance...'}
+          fallbackText="Sorting places by distance..."
           onSelectPlace={handleSelectPlace}
         />
       </main>
