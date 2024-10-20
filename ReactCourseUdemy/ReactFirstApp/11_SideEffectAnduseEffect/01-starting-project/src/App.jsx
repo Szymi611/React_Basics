@@ -14,7 +14,7 @@ function App() {
   const [pickedPlaces, setPickedPlaces] = useState([]);
 
   // Helps us escape infinite loop and use Effect will reexecute only when 
-  // empty array (dependencies array) is changed. 
+  // empty array (dependencies array) is changed and this never change so its executed only once.
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       const sortedPlaces = sortPlacesByDistance(AVAILABLE_PLACES, position.coords.latitude, position.coords.longitude);
@@ -41,6 +41,11 @@ function App() {
       const place = AVAILABLE_PLACES.find((place) => place.id === id);
       return [place, ...prevPickedPlaces];
     });
+
+    const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+    if(storedIds.indexOf(id) !== -1) {
+      localStorage.setItem('selectedPlaces', JSON.stringify([id, ...storedIds]));
+    }
   }
 
   function handleRemovePlace() {
