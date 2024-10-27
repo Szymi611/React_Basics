@@ -18,6 +18,9 @@ export default function Login() {
   function handleSubmit(event) {
     event.preventDefault();
 
+    //Good practise is to add here validation because after
+    // submition of the form it accepts empty values
+
     console.log(enteredValues);
   }
 
