@@ -1,7 +1,8 @@
 import styles from './MainHeader.module.css';
 import { MdPostAdd, MdMessage } from 'react-icons/md';
 
-export default function MainHeader() {
+
+export default function MainHeader({onCreatePost}) {
   return (
     <header className={styles.header}>
       <h1 className={styles.logo}>
