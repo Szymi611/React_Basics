@@ -4,34 +4,37 @@ import Modal from "./Modal";
 import styles from "./PostsList.module.css";
 import { useState } from "react";
 
-export default function PostsList({isPosting, onClosePost}) {
-  const [enteredBody, setEnteredBody] = useState("");
-  const [enteredAuthor, setEnteredAuthor] = useState("");
-  function bodyChangeHandler(event) {
-    setEnteredBody(event.target.value);
-  }
+export default function PostsList({ isPosting, onClosePost }) {
+  const [posts, setPosts] = useState([]);
 
-  function authorChangeHandler(event) {
-    setEnteredAuthor(event.target.value);
+  function addPostHandler(postData) {
+    setPosts((existingPosts) => {
+      return [postData, ...existingPosts];
+    });
   }
 
   return (
     <>
       {isPosting && (
         <Modal onClose={onClosePost}>
-          <NewPost
-            onBodyChange={bodyChangeHandler}
-            body={enteredBody}
-            author={enteredAuthor}
-            onAuthorChange={authorChangeHandler}
-          />
+          <NewPost onCancel={onClosePost} onAddPost={addPostHandler} />
         </Modal>
       )}
-
-      <ul className={styles.posts}>
-        <Post name={enteredAuthor} message={enteredBody} />
-        <Post name={"Wojtek"} message={"Hola amigo!"} />
-      </ul>
+      {posts.length > 0 && (
+        <ul className={styles.posts}>
+          {posts.map((post) => {
+            return (
+              <Post key={post.body} name={post.author} message={post.body} />
+            );
+          })}
+        </ul>
+      )}
+      {posts.length === 0 && (
+        <div style={{ textAlign: "center", color: "white" }}>
+          <h2>There are not posts yet!</h2>
+          <p>Feel free to add one</p>
+        </div>
+      )}
     </>
   );
 }
