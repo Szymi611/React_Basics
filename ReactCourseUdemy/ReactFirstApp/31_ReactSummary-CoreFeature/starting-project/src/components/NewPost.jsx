@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import styles from './NewPost.module.css'
+import { useState } from "react";
+import styles from "./NewPost.module.css";
 
 export default function NewPost({ onCancel, onAddPost }) {
   const [enteredBody, setEnteredBody] = useState("");
@@ -14,28 +14,42 @@ export default function NewPost({ onCancel, onAddPost }) {
 
   function submitHandler(event) {
     event.preventDefault();
-    const postData={
+    const postData = {
       body: enteredBody,
-      author: enteredAuthor
+      author: enteredAuthor,
     };
     onAddPost(postData);
     onCancel();
   }
 
-  return(
+  return (
     <form className={styles.form} onSubmit={submitHandler}>
       <p>
         <label htmlFor="body">Text</label>
-        <textarea name="body" id="body" required rows='3' onChange={bodyChangeHandler}/>
+        <textarea
+          name="body"
+          id="body"
+          required
+          rows="3"
+          onChange={bodyChangeHandler}
+        />
       </p>
       <p>
         <label htmlFor="author">Author</label>
-        <input type="text" name="author" id="author" required onChange={authorChangeHandler}/>
+        <input
+          type="text"
+          name="author"
+          id="author"
+          required
+          onChange={authorChangeHandler}
+        />
       </p>
       <p className={styles.actions}>
-        <button type='button' onClick={onCancel}>Cancel</button>
+        <button type="button" onClick={onCancel}>
+          Cancel
+        </button>
         <button>Submit</button>
       </p>
     </form>
   );
-} 
+}
