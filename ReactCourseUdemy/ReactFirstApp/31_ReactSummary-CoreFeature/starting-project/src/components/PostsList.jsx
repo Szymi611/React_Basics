@@ -5,15 +5,22 @@ import styles from "./PostsList.module.css";
 import { useState, useEffect } from "react";
 
 function PostsList({ isPosting, onClosePost }) {
-  
-  
   const [posts, setPosts] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function fetchPosts(){
-      const response = await fetch('http://localhost:8080/posts')
-      const resData = await response.json()
+    async function fetchPosts() {
+      setIsFetching(true);
+      const response = await fetch("http://localhost:8080/posts");
+      const resData = await response.json();
+      if(!response.ok){
+        setError('Something went wrong!');
+        setIsFetching(false);
+        return;
+      }
       setPosts(resData.posts);
+      setIsFetching(false);
     }
 
     fetchPosts();
@@ -39,7 +46,7 @@ function PostsList({ isPosting, onClosePost }) {
           <NewPost onCancel={onClosePost} onAddPost={addPostHandler} />
         </Modal>
       )}
-      {posts.length > 0 && (
+      {!isFetching && posts.length > 0 && (
         <ul className={styles.posts}>
           {posts.map((post) => {
             return (
@@ -48,10 +55,15 @@ function PostsList({ isPosting, onClosePost }) {
           })}
         </ul>
       )}
-      {posts.length === 0 && (
+      {!isFetching && posts.length === 0 && (
         <div style={{ textAlign: "center", color: "white" }}>
           <h2>There are not posts yet!</h2>
           <p>Feel free to add one</p>
+        </div>
+      )}
+      {isFetching && (
+        <div style={{ textAlign: "center", color: "white" }}>
+          <p>Loading posts ...</p>
         </div>
       )}
     </>
