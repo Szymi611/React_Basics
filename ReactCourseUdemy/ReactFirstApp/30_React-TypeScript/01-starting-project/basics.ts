@@ -16,10 +16,12 @@ let hobiess: null;
 let hobbies: string[];
 hobbies = ["Sports", "Cooking"];
 
-let person: {
+type Person = {
   name: string;
   age: number;
-};
+}
+
+let person: Person;
 
 person = {
   name: "Wojtek",
@@ -34,3 +36,11 @@ let people :{
   name: string;
   age: number;
 }[]; // array of objects
+
+let people2: Person[]; // array of objects
+
+
+//type inference
+let course: string | number = "React - The Complete Guide";
+
+course = 1234; 
