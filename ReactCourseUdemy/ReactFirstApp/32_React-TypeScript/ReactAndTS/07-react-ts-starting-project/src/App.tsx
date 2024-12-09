@@ -6,7 +6,11 @@ import './App.css';
 function App() {
   const todos = [
     new Todo('Learn React'),
-    new Todo('Learn Typescript')
+    new Todo('Learn Typescript'),
+    new Todo('Learn Redux'),
+    new Todo('Learn React Native'),
+    new Todo('Learn Flutter'),
+    new Todo('Learn Kotlin'),
   ]
 
   
